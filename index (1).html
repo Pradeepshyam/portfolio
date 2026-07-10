@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shyamrao Pradeep — Software Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1526;
+    --surface:#101F36;
+    --panel:#0D1A2C;
+    --line:#1E3350;
+    --text:#E9EEF7;
+    --muted:#7C8CA6;
+    --amber:#F2A93B;
+    --green:#7ADFA4;
+    --display:'Space Grotesk',sans-serif;
+    --body:'Inter',sans-serif;
+    --mono:'JetBrains Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:var(--body);line-height:1.6;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px;}
+  ::selection{background:var(--amber);color:#1a1206;}
+
+  header{position:sticky;top:0;z-index:50;background:rgba(11,21,38,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 0;}
+  .logo{font-family:var(--mono);font-size:15px;color:var(--text);}
+  .logo span{color:var(--amber);}
+  .nav-links{display:flex;gap:30px;font-size:13.5px;color:var(--muted);letter-spacing:0.5px;}
+  .nav-links a:hover{color:var(--text);}
+  .status-pill{font-family:var(--mono);font-size:12.5px;color:var(--green);display:flex;align-items:center;gap:7px;}
+  .status-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(122,223,164,0.18);}
+  @media (max-width:760px){.nav-links{display:none;}}
+
+  .hero{padding:80px 0 90px;}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:start;}
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .eyebrow{font-family:var(--mono);font-size:12.5px;color:var(--amber);letter-spacing:1.5px;margin-bottom:20px;}
+  .eyebrow::before{content:'— ';}
+  h1.name{
+    font-family:var(--display);font-weight:700;font-size:clamp(38px,5.2vw,56px);
+    line-height:1.05;letter-spacing:-1px;cursor:pointer;display:inline-block;
+    border-bottom:2px dashed transparent;transition:border-color .15s ease, color .15s ease;
+  }
+  h1.name:hover{color:var(--amber);border-color:var(--amber);}
+  .name-hint{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:10px;}
+  .lede{margin-top:20px;max-width:520px;color:#B7C2D6;font-size:16px;}
+  .current-line{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:18px;}
+  .current-line b{color:var(--text);font-weight:500;}
+  .hero-actions{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap;}
+  .btn{font-family:var(--body);font-weight:600;font-size:14px;padding:12px 20px;border-radius:7px;display:inline-flex;align-items:center;gap:7px;transition:transform .12s ease, background .12s ease, border-color .12s ease;border:none;cursor:pointer;}
+  .btn-amber{background:var(--amber);color:#1A1206;}
+  .btn-amber:hover{transform:translateY(-2px);}
+  .btn-ghost{border:1px solid var(--line);color:var(--text);background:none;}
+  .btn-ghost:hover{border-color:var(--amber);background:rgba(242,169,59,0.06);}
+
+  .terminal{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .term-bar{display:flex;align-items:center;gap:8px;padding:11px 14px;background:var(--surface);border-bottom:1px solid var(--line);}
+  .dot{width:10px;height:10px;border-radius:50%;}
+  .dot.red{background:#EF6B5C;}.dot.yellow{background:#F1C24B;}.dot.green{background:#63C46A;}
+  .term-title{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:6px;}
+  .term-body{padding:20px 20px 24px;font-family:var(--mono);font-size:13px;}
+  .term-body .cmd{color:var(--amber);}
+  .term-body .out{color:#B7C2D6;margin:4px 0 16px 14px;}
+  .term-body .stat-line{display:flex;align-items:center;gap:8px;margin:4px 0 4px 14px;color:#B7C2D6;}
+  .term-body .stat-line::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);}
+  .cursor{display:inline-block;width:7px;height:14px;background:var(--amber);margin-left:4px;animation:blink 1s steps(1) infinite;vertical-align:middle;}
+  @keyframes blink{50%{opacity:0;}}
+
+  section{padding:76px 0;border-top:1px solid var(--line);}
+  .sec-title{font-family:var(--display);font-size:clamp(24px,3.6vw,32px);font-weight:600;letter-spacing:-0.5px;max-width:640px;}
+
+  .transform-grid{display:grid;grid-template-columns:0.85fr auto 1.4fr;gap:22px;align-items:center;margin-top:40px;}
+  @media (max-width:900px){.transform-grid{grid-template-columns:1fr;} .transform-arrow{display:none;}}
+  .input-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;align-self:start;}
+  .input-panel .label{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-bottom:14px;}
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;}
+  .pill{font-family:var(--mono);font-size:12px;background:var(--surface);border:1px solid var(--line);padding:6px 11px;border-radius:6px;color:#B7C2D6;}
+  .transform-arrow{font-family:var(--mono);color:var(--amber);font-size:13px;text-align:center;}
+  .output-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media (max-width:520px){.output-grid{grid-template-columns:1fr;}}
+  .out-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;}
+  .out-card h4{font-family:var(--display);font-size:15px;font-weight:600;margin-bottom:10px;}
+  .out-card ul{list-style:none;font-size:13px;color:var(--muted);}
+  .out-card li{margin-bottom:6px;padding-left:12px;position:relative;}
+  .out-card li::before{content:'·';position:absolute;left:0;color:var(--amber);}
+
+  .router-pill{font-family:var(--mono);font-size:12px;color:var(--amber);border:1px solid var(--line);background:var(--panel);display:inline-block;padding:9px 18px;border-radius:20px;margin:34px auto 0;}
+  .router-pill-wrap{text-align:center;}
+  .route-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:34px;}
+  @media (max-width:800px){.route-grid{grid-template-columns:1fr;}}
+  .route-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:26px;}
+  .route-card .cond{font-family:var(--mono);font-size:11.5px;color:var(--amber);margin-bottom:14px;}
+  .route-role{font-family:var(--display);font-size:19px;font-weight:600;}
+  .route-meta{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:5px;margin-bottom:16px;}
+  .route-card ul{padding-left:18px;color:#B7C2D6;font-size:13.5px;}
+  .route-card li{margin-bottom:8px;}
+  .route-footer{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:30px;font-family:var(--mono);font-size:12px;color:var(--muted);}
+  .cred-badge{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:10px 16px;color:var(--text);}
+
+  .scatter-sub{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:10px;}
+  .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:36px;}
+  @media (max-width:800px){.proj-grid{grid-template-columns:1fr;}}
+  .proj-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px;cursor:pointer;transition:border-color .15s ease, transform .15s ease;}
+  .proj-card:hover{border-color:var(--amber);transform:translateY(-2px);}
+  .proj-path{font-family:var(--mono);font-size:12px;color:var(--amber);margin-bottom:10px;}
+  .proj-title{font-family:var(--display);font-size:17px;font-weight:600;margin-bottom:10px;}
+  .proj-desc{font-size:13.5px;color:var(--muted);}
+  .proj-note{font-style:italic;font-size:12px;color:var(--muted);margin-top:8px;}
+  .proj-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px;}
+  .proj-tag{font-family:var(--mono);font-size:11px;border:1px solid var(--line);color:#B7C2D6;padding:4px 9px;border-radius:5px;}
+  .proj-click{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:16px;display:flex;align-items:center;gap:6px;}
+
+  .cert-inline{margin-top:30px;font-family:var(--mono);font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-left:2px solid var(--green);background:var(--panel);padding:12px 18px;border-radius:8px;display:inline-flex;flex-wrap:wrap;gap:8px;align-items:center;}
+  .cert-inline b{color:var(--green);}
+
+  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;margin-top:36px;align-items:center;}
+  @media (max-width:800px){.contact-grid{grid-template-columns:1fr;}}
+  .json-panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px;font-family:var(--mono);font-size:13.5px;color:#B7C2D6;line-height:1.9;}
+  .json-panel .k{color:var(--amber);}
+  .json-panel .v{color:var(--text);}
+  .contact-btns{display:flex;flex-direction:column;gap:12px;}
+  .contact-btns .btn{justify-content:center;}
+
+  footer{padding:26px 0;text-align:center;font-family:var(--mono);font-size:12px;color:var(--muted);border-top:1px solid var(--line);}
+  footer .ok{color:var(--green);}
+
+  .modal-overlay{position:fixed;inset:0;background:rgba(4,8,16,0.75);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:200;padding:24px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--line);border-radius:12px;max-width:580px;width:100%;padding:0;position:relative;max-height:85vh;overflow-y:auto;}
+  .modal-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--line);}
+  .modal-bar .term-title{margin-left:6px;}
+  .modal-close{margin-left:auto;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer;background:none;font-size:14px;}
+  .modal-close:hover{color:var(--text);border-color:var(--amber);}
+  .modal-content{padding:28px 26px 30px;}
+  .modal-content h3{font-family:var(--display);font-size:21px;margin-bottom:6px;}
+  .modal-content .modal-meta{font-family:var(--mono);font-size:11.5px;color:var(--amber);margin-bottom:16px;display:block;}
+  .modal-content p{color:#B7C2D6;font-size:14.5px;margin-bottom:14px;}
+  .modal-content .proj-tags{margin:18px 0 6px;}
+  .modal-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:13px;color:var(--amber);border:1px solid var(--line);padding:9px 16px;border-radius:8px;margin-top:10px;}
+  .modal-link:hover{border-color:var(--amber);background:rgba(242,169,59,0.06);}
+
+  @media (prefers-reduced-motion: reduce){.cursor{animation:none;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="logo">~/<span>pradeep</span></div>
+      <div class="nav-links">
+        <a href="#skills">SKILLS</a>
+        <a href="#experience">EXPERIENCE</a>
+        <a href="#projects">PROJECTS</a>
+        <a href="#contact">CONTACT</a>
+      </div>
+      <div class="status-pill">Available</div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" style="border-top:none;">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">SOFTWARE DEVELOPER</div>
+          <h1 class="name" id="name-trigger">Shyamrao Pradeep</h1>
+          <div class="name-hint">↳ click the name for the full story</div>
+          <p class="lede">Building reliable backend systems and API-led integrations — from RESTful services to enterprise data pipelines on the MuleSoft Anypoint Platform.</p>
+          <div class="current-line">• Currently: <b>MuleSoft Developer @ Satya Softtech, Hyderabad</b></div>
+          <div class="hero-actions">
+            <button class="btn btn-amber" id="about-btn" type="button">About me</button>
+            <a class="btn btn-ghost" href="#projects">View projects ↓</a>
+            <a class="btn btn-ghost" href="mailto:shyamraopradeep@gmail.com">Email me</a>
+            <a class="btn btn-ghost" href="https://github.com/Pradeepshyam" target="_blank" rel="noopener">GitHub ↗</a>
+          </div>
+        </div>
+
+        <div class="terminal">
+          <div class="term-bar">
+            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+            <span class="term-title">whoami.sh</span>
+          </div>
+          <div class="term-body">
+            <div class="cmd">$ whoami</div>
+            <div class="out">Software Developer — API &amp; backend integrations<br>Based in Hyderabad, IN</div>
+            <div class="cmd">$ cat core_stack.txt</div>
+            <div class="out">MuleSoft Anypoint · REST &amp; SOAP APIs<br>DataWeave 2.0 · RAML · SQL Server<br>Jenkins CI/CD · Postman · Git</div>
+            <div class="cmd">$ status --current</div>
+            <div class="stat-line">Shipping integrations at Satya Softtech</div>
+            <div class="cmd" style="margin-top:16px;">$<span class="cursor"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap">
+      <div class="eyebrow">TRANSFORM MESSAGE · SDW 2.0</div>
+      <h2 class="sec-title">Turning a skill set into shipped integrations</h2>
+
+      <div class="transform-grid">
+        <div class="input-panel">
+          <div class="label">INPUT :: payload.skills</div>
+          <div class="pill-row">
+            <span class="pill">REST</span><span class="pill">SOAP</span><span class="pill">DataWeave</span>
+            <span class="pill">RAML</span><span class="pill">OAuth 2.0</span>
+            <span class="pill">Anypoint Studio</span><span class="pill">CloudHub</span><span class="pill">API Manager</span>
+            <span class="pill">Jenkins</span><span class="pill">Postman</span><span class="pill">SQL Server</span>
+            <span class="pill">JSON</span><span class="pill">XML</span>
+          </div>
+        </div>
+        <div class="transform-arrow">-------&gt;</div>
+        <div class="output-grid">
+          <div class="out-card">
+            <h4>Integration &amp; APIs</h4>
+            <ul><li>REST &amp; SOAP API design</li><li>DataWeave 2.0 transformations</li><li>RAML specification</li><li>API-led connectivity</li></ul>
+          </div>
+          <div class="out-card">
+            <h4>Anypoint Platform</h4>
+            <ul><li>Anypoint Studio</li><li>CloudHub deployments</li><li>API Manager &amp; security policies</li><li>Runtime Manager</li></ul>
+          </div>
+          <div class="out-card">
+            <h4>DevOps &amp; Tooling</h4>
+            <ul><li>Jenkins CI/CD</li><li>Postman</li><li>Git &amp; version control</li><li>ServiceNow</li></ul>
+          </div>
+          <div class="out-card">
+            <h4>Data &amp; Practice</h4>
+            <ul><li>SQL Server / DBMS</li><li>Monitoring &amp; troubleshooting</li><li>Incident resolution</li><li>Cross-team collaboration</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="eyebrow">CHOICE ROUTER · ROUTE BY PAYLOAD.TYPE</div>
+      <h2 class="sec-title">Where I work, and what I build on the side</h2>
+
+      <div class="router-pill-wrap"><span class="router-pill">choice :: evaluates payload.type</span></div>
+
+      <div class="route-grid">
+        <div class="route-card">
+          <div class="cond">#[payload.type == "experience"]</div>
+          <div class="route-role">MuleSoft Developer</div>
+          <div class="route-meta">Satya Softtech · Hyderabad · Nov 2024 — Present</div>
+          <ul>
+            <li>Designed and built RESTful APIs using Mule 4 API-led connectivity across System, Process, and Experience layers.</li>
+            <li>Wrote RAML specifications and published APIs to Anypoint Exchange for reuse across teams.</li>
+            <li>Built DataWeave transformations mapping data between JSON, XML, and CSV payloads.</li>
+            <li>Applied OAuth 2.0, Client ID Enforcement, and Basic Auth policies via API Manager.</li>
+            <li>Ran CloudHub deployments and Jenkins CI/CD pipelines end to end.</li>
+            <li>Cut average incident resolution time by 30% and production downtime by 40%.</li>
+          </ul>
+        </div>
+        <div class="route-card">
+          <div class="cond">#[payload.type == "project"]</div>
+          <div class="route-role">Workday Revenue Management Onboarding</div>
+          <div class="route-meta">Featured project · System API integration</div>
+          <ul>
+            <li>Designed the System API integration using the Workday Anypoint Connector to onboard new customers automatically.</li>
+            <li>Validated and mapped incoming XML customer payloads to Workday's expected schema using DataWeave.</li>
+            <li>Built error handling and retry logic for failed record-creation calls.</li>
+            <li>Tested the flow end-to-end against a Workday Revenue Management sandbox before packaging for deployment.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="route-footer">
+        <span>otherwise -&gt; default route</span>
+        <span class="cred-badge">B.Sc, Satavahana University · 2023 · CGPA 8.2 &nbsp;|&nbsp; MuleSoft Certified Developer – Level 1 (2025)</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="eyebrow">SCATTER-GATHER · 4 PARALLEL ROUTES</div>
+      <h2 class="sec-title">Selected integrations, gathered</h2>
+      <div class="scatter-sub">dispatching to 4 routes in parallel → merging results into one response</div>
+
+      <div class="proj-grid" id="proj-grid"></div>
+
+      <div class="cert-inline">
+        <b>✓ MuleSoft Certified Developer – Level 1</b>
+        <span>Anypoint Studio · RAML · DataWeave · CloudHub — 2025</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="eyebrow">SET PAYLOAD · TEXT/PLAIN → YOU</div>
+      <h2 class="sec-title">Let's connect two systems</h2>
+
+      <div class="contact-grid">
+        <div class="json-panel">
+{<br>
+&nbsp;&nbsp;<span class="k">"name"</span>: <span class="v">"Shyamrao Pradeep"</span>,<br>
+&nbsp;&nbsp;<span class="k">"role"</span>: <span class="v">"MuleSoft Developer"</span>,<br>
+&nbsp;&nbsp;<span class="k">"location"</span>: <span class="v">"Hyderabad, Telangana, IN"</span>,<br>
+&nbsp;&nbsp;<span class="k">"email"</span>: <span class="v">"shyamraopradeep@gmail.com"</span>,<br>
+&nbsp;&nbsp;<span class="k">"phone"</span>: <span class="v">"+91 9704673406"</span>,<br>
+&nbsp;&nbsp;<span class="k">"github"</span>: <span class="v">"github.com/Pradeepshyam"</span>,<br>
+&nbsp;&nbsp;<span class="k">"linkedin"</span>: <span class="v">"linkedin.com/in/pradeep-shyamrao-332600264"</span><br>
+}
+        </div>
+        <div class="contact-btns">
+          <a class="btn btn-amber" href="mailto:shyamraopradeep@gmail.com">Send an email →</a>
+          <a class="btn btn-ghost" href="https://github.com/Pradeepshyam" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/pradeep-shyamrao-332600264/" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">[INFO] <span class="ok">Response sent · 200 OK</span> · Hyderabad, IN · built with care</div>
+</footer>
+
+<div class="modal-overlay" id="about-overlay">
+  <div class="modal">
+    <div class="modal-bar">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="term-title">about_me.md</span>
+      <button class="modal-close" id="about-close">✕</button>
+    </div>
+    <div class="modal-content">
+      <h3>Hi, I'm Shyamrao Pradeep.</h3>
+      <span class="modal-meta">// the full story</span>
+      <p>I'm a software developer based in Hyderabad, currently working as a MuleSoft Developer at Satya Softtech, where I design and ship RESTful and SOAP APIs using Mule 4's API-led connectivity model. Alongside client work, I build my own integrations end to end — like a Workday onboarding flow that automates new-customer creation using the Workday Anypoint Connector and DataWeave — to keep pushing past what a day job alone covers.</p>
+      <p>Day to day, I write DataWeave transformations that move data cleanly between JSON, XML, and CSV, and manage CloudHub deployments through Jenkins-driven CI/CD. On the UMG (Universal Music Group) engagement, I've carried requirements all the way from analysis through DEV → QA → UAT → PROD, and cut incident resolution time by 30% along the way.</p>
+      <p>I hold a B.Sc from Satavahana University (2023, CGPA 8.2) and I'm MuleSoft Certified — Level 1 (2025). Right now I'm deepening my SQL and data-warehousing skills as I expand into Informatica IICS/PowerCenter — because the instinct that makes a good integration developer, getting data to move correctly between systems, is exactly what ETL work needs too.</p>
+      <a class="modal-link" href="mailto:shyamraopradeep@gmail.com">Get in touch →</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="proj-overlay">
+  <div class="modal">
+    <div class="modal-bar">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="term-title" id="proj-modal-path"></span>
+      <button class="modal-close" id="proj-close">✕</button>
+    </div>
+    <div class="modal-content">
+      <h3 id="proj-modal-title"></h3>
+      <span class="modal-meta" id="proj-modal-meta"></span>
+      <p id="proj-modal-desc"></p>
+      <div class="proj-tags" id="proj-modal-tags"></div>
+      <a class="modal-link" id="proj-modal-link" target="_blank" rel="noopener">View source on GitHub ↗</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    path: "/account-intelligence-api",
+    title: "Salesforce Account Intelligence API",
+    meta: "3-tier API-led integration",
+    short: "A 3-tier API-led integration (System → Process → Experience) that merges Salesforce CRM, live currency exchange, and simulated ERP data via a Scatter-Gather router and DataWeave, exposed to a Salesforce Agentforce for real-time account briefings.",
+    long: "Built on Mule 4's API-led connectivity model, this integration merges data from Salesforce CRM, a live currency-exchange feed, and simulated ERP records through a Scatter-Gather router, then reshapes the combined result with DataWeave. The Experience API exposes it to a Salesforce Agentforce so account teams get a real-time, blended account briefing instead of pulling from three separate systems by hand.",
+    tags: ["RAML", "DataWeave 2.0", "OAuth 2.0", "CloudHub 2.0", "Salesforce"],
+    url: "https://github.com/Pradeepshyam/Salesforce-CRM-Integration"
+  },
+  {
+    path: "/workday-customer-onboarding",
+    title: "Workday Revenue Management Onboarding",
+    meta: "System API · connector integration",
+    short: "A Mule flow using the Workday Anypoint Connector that accepts incoming XML customer data, transforms it with DataWeave, and creates the customer record directly inside Workday's Revenue Management console.",
+    long: "This integration sits at the System API layer, using the Workday Anypoint Connector to onboard a new customer end to end. Incoming XML payloads are validated, reshaped with DataWeave into the schema Workday expects, and pushed straight into the Revenue Management console — removing a manual data-entry step from the onboarding process.",
+    tags: ["DataWeave", "XML", "Workday Connector"],
+    url: "https://github.com/Pradeepshyam/adding-a-new-customer-to-workday-revenue-management"
+  },
+  {
+    path: "/covid-mulesoft-project",
+    title: "Mule 4 Flow Practice Project",
+    meta: "Maven-packaged Mule application",
+    short: "A Maven-packaged Mule 4 application used to practice flow design, connector configuration, and standard deployment packaging fundamentals.",
+    long: "A self-directed Mule 4 project built around COVID-19 dataset information, packaged with Maven. It was built to practice the fundamentals — flow design, connector configuration, and getting a Mule application into a standard deployable package — outside of client work.",
+    tags: ["Mule 4", "Maven"],
+    url: "https://github.com/Pradeepshyam/Covid-mulesoft-project"
+  },
+  {
+    path: "/flight-query-service",
+    title: "Flight Query Transformation Flow",
+    meta: "Collaborative practice repository",
+    short: "A DataWeave-driven flow for transforming flight search payloads, built as a hands-on collaborative exercise in applied MuleSoft data mapping.",
+    long: "A collaborative practice repository focused entirely on DataWeave transformation logic — taking flight-search queries and reshaping the response payload accurately across formats. It mirrors the exact transformation patterns used on production APIs, minus the production stakes.",
+    tags: ["DataWeave", "Mule 4"],
+    note: "Collaborative practice repository",
+    url: "https://github.com/Pradeepshyam/mule_flights_querry"
+  }
+];
+
+const grid = document.getElementById('proj-grid');
+projects.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'proj-card';
+  card.innerHTML = `
+    <div class="proj-path">${p.path}</div>
+    <div class="proj-title">${p.title}</div>
+    <div class="proj-desc">${p.short}</div>
+    ${p.note ? `<div class="proj-note">${p.note}</div>` : ''}
+    <div class="proj-tags">${p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('')}</div>
+    <div class="proj-click">⊙ Click for details</div>
+  `;
+  card.addEventListener('click', () => openProjModal(i));
+  grid.appendChild(card);
+});
+
+const projOverlay = document.getElementById('proj-overlay');
+function openProjModal(i){
+  const p = projects[i];
+  document.getElementById('proj-modal-path').textContent = p.path;
+  document.getElementById('proj-modal-title').textContent = p.title;
+  document.getElementById('proj-modal-meta').textContent = p.meta;
+  document.getElementById('proj-modal-desc').textContent = p.long;
+  document.getElementById('proj-modal-link').href = p.url;
+  document.getElementById('proj-modal-tags').innerHTML = p.tags.map(t => `<span class="proj-tag">${t}</span>`).join('');
+  projOverlay.classList.add('open');
+}
+document.getElementById('proj-close').addEventListener('click', () => projOverlay.classList.remove('open'));
+projOverlay.addEventListener('click', (e) => { if(e.target === projOverlay) projOverlay.classList.remove('open'); });
+
+const aboutOverlay = document.getElementById('about-overlay');
+function openAbout(){ aboutOverlay.classList.add('open'); }
+document.getElementById('name-trigger').addEventListener('click', openAbout);
+document.getElementById('about-btn').addEventListener('click', openAbout);
+document.getElementById('about-close').addEventListener('click', () => aboutOverlay.classList.remove('open'));
+aboutOverlay.addEventListener('click', (e) => { if(e.target === aboutOverlay) aboutOverlay.classList.remove('open'); });
+
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape'){
+    projOverlay.classList.remove('open');
+    aboutOverlay.classList.remove('open');
+  }
+});
+</script>
+
+</body>
+</html>
